@@ -36,28 +36,38 @@ button.addEventListener("click", function(){
 })
 
 function getForecast(city){
-    var url = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&units=imperial&appid=" + apiKey;
+    var url = "https://api.openweathermap.org/data/2.5/forecast?q="+city+"&units=imperial&appid=" + apiKey;
     fetch(url)
     .then(response => response.json())
     .then(data =>{
         console.log(data);
-        console.log(data.main.temp);
-        var temp = data.main.temp;
-        var humidity = data.main.humidity;
-        var windSpeed = data.wind.speed;
-        
-        var date = new Date();
-        var month = date.getMonth() +1;
-        var day = date.getDate();
-        var year = date.getFullYear();
-        var dateString = month+"/" + day + "/" + year;
-        var icon = "<img src='http://openweathermap.org/img/wn/" + data.weather[0].icon + ".png'>"
-        document.querySelector(".city").innerHTML = city + " (" + dateString + ") " + icon ;
-        
+       
+        var output = "";
+        for(var i = 0; i < 40; i+= 8 ){
+            output+= "<div>";
+            var date = data.list[i].dt_txt;
+            var month = date.substring(5,7);
+            var day = date.substring(8,10);
+            var year = date.substring(0,4);
+            var dateString = month+"/" + day + "/" + year;
+            output+= "<p>" + dateString + "</p>";
+
         document.querySelector(".temp").innerHTML = "Temperature: " + temp + " &deg;F";
         document.querySelector(".humidity").innerHTML = "Humidity: " + humidity + " %";
         document.querySelector(".wind-speed").innerHTML = "Wind Speed: " + windSpeed + " MPH";
-        getForecast (city);
+            output+= "</div>";
+        }
+        document.querySelector(".forecast").innerHTML = output;
+
+
+        /*var temp = data.main.temp;
+        var humidity = data.main.humidity;
+        var windSpeed = data.wind.speed;
+        
+        var icon = "<img src='http://openweathermap.org/img/wn/" + data.weather[0].icon + ".png'>"
+        document.querySelector(".city").innerHTML = city + " (" + dateString + ") " + icon ;
+        
+        */
        
     })
         

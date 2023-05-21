@@ -2,7 +2,7 @@
     margin:0;
     padding:0;
     box-sizing: border-box;
-    background-color:#c9ecfb78 ;
+    
 }
 #header{
     display: flex;
@@ -14,6 +14,7 @@
 
 }
 body{
+    background-color:#c9ecfb78;
     padding-top: 200px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
@@ -47,4 +48,15 @@ input[type="text"]{
     font-size:20px;
    
     border-radius: 15px;
+}
+
+.forecast {
+    display: flex;
+
+}
+.forecast div{
+    margin-right: 20px;
+    padding: 10px;
+    background-color: hsl(227, 52%, 29%);
+    color: white
 }
