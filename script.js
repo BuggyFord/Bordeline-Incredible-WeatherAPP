@@ -51,18 +51,21 @@ function getForecast(city){
             var year = date.substring(0,4);
             var dateString = month+"/" + day + "/" + year;
             output+= "<p>" + dateString + "</p>";
+            var icon = "<img src='http://openweathermap.org/img/wn/" + data.list[i].weather[0].icon + ".png'>"
+            output+= "<p>" + icon + "</p>";
+            var temp = data.list[i].main.temp;
+            var humidity = data.list[i].main.humidity;
+            var windSpeed = data.list[i].wind.speed;
 
-        document.querySelector(".temp").innerHTML = "Temperature: " + temp + " &deg;F";
-        document.querySelector(".humidity").innerHTML = "Humidity: " + humidity + " %";
-        document.querySelector(".wind-speed").innerHTML = "Wind Speed: " + windSpeed + " MPH";
+            output+= "<p>Temperature: " + temp + " &deg;F</p>";
+            output+= "<p>Humidity: " + humidity + " %</p>";
+            output+= "<p>Wind Speed: " + windSpeed + " MPH</p>";
             output+= "</div>";
         }
         document.querySelector(".forecast").innerHTML = output;
 
 
-        /*var temp = data.main.temp;
-        var humidity = data.main.humidity;
-        var windSpeed = data.wind.speed;
+        /*
         
         var icon = "<img src='http://openweathermap.org/img/wn/" + data.weather[0].icon + ".png'>"
         document.querySelector(".city").innerHTML = city + " (" + dateString + ") " + icon ;
