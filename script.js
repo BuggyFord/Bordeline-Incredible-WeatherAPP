@@ -6,6 +6,33 @@ var windSpeed = document.querySelector(".wind-speed");
 var temp = document.querySelector(".temp");
 var humid = document.querySelector(".humidity");
 var apiKey = "d17256f3567e1479f6aee9afaccb272d";
+var historyList = document.querySelector('.history')
+
+// setup an intitial condition for our persisting data
+// localStorage.setItem('cities', '[]');   // here is our starting Empty Array (In STRING format)
+/*
+var savedData = localStorage.getItem('cities');
+console.log("Local Storage: ", savedData);
+console.log("Data Type: ", typeof savedData);
+
+var parsedData = JSON.parse(savedData);
+console.log("Parsed Storage: ", parsedData);
+console.log("Data Type: ", typeof parsedData);
+
+var jsObj = {
+    name: "bill",
+    age: 25
+}
+
+var jsonObj = {
+    "name": "bill",
+    "age": "25"
+}
+
+var stringData = JSON.stringify(parsedData);
+console.log("Stringified Storage: ", stringData);
+console.log("Data Type: ", typeof stringData);
+*/
 
 button.addEventListener("click", function(){
     var city = document.getElementById("city").value;
@@ -31,7 +58,27 @@ button.addEventListener("click", function(){
         document.querySelector(".humidity").innerHTML = "Humidity: " + humidity + " %";
         document.querySelector(".wind-speed").innerHTML = "Wind Speed: " + windSpeed + " MPH";
         getForecast (city);
-       
+
+        // add the city to localStorage
+        
+        // first we have to GRAB the exisiting data
+        var savedData = localStorage.getItem('cities');
+        if(!savedData) {
+            savedData = [];
+        }
+        // Then we convert the STRING data into a JS ARRAY
+        var parsedData = JSON.parse(savedData);
+        console.log("Old Snapshot Dataset: ", parsedData);
+        // we ADD our NEW data to our JS ARRAY
+        parsedData.push(city);
+        
+        // we need to convert the JS ARRAY data back into a STRING for the Browser
+        var newDataArr = JSON.stringify(parsedData);
+        console.log("New Snapshot Dataset: ", newDataArr);
+
+        // We save the new dataset back into the Browser
+        localStorage.setItem('cities', newDataArr);
+        getHistory()
     })
 })
 
@@ -75,3 +122,33 @@ function getForecast(city){
     })
         
 }
+
+function getHistory() {
+
+    // What do we need in this function?
+
+    // we need DATA  --> localStorage
+    var historyData = localStorage.getItem('cities');
+
+    console.log("Data: ", historyData);
+    console.log("Data type: ", typeof historyData);
+
+    // we should covert the data into somehting more useful
+    var historyArr = JSON.parse(historyData);   // gives us an ARRAY OBJECT 
+
+    // we need to create a button/list item for each city
+    for(var i = 0; i < historyArr.length; i++) {
+        console.log(historyArr[i]);
+        console.log(newItem);
+        var newItem = document.createElement('button');
+        newItem.textContent = historyArr[i]
+        console.log(newItem);
+        // add/append this new element/data to the DOM
+        historyList.append(newItem);
+    }
+
+    // * TO DO * How do we keep the HISTORY container from reapeating its dataset(?) -- //
+
+}
+
+getHistory();
