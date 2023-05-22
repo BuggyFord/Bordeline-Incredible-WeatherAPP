@@ -8,6 +8,7 @@ var humid = document.querySelector(".humidity");
 var apiKey = "d17256f3567e1479f6aee9afaccb272d";
 var historyList = document.querySelector('.history')
 
+let searchHistory = [];
 // setup an intitial condition for our persisting data
 // localStorage.setItem('cities', '[]');   // here is our starting Empty Array (In STRING format)
 /*
@@ -130,25 +131,36 @@ function getHistory() {
     // we need DATA  --> localStorage
     var historyData = localStorage.getItem('cities');
 
-    console.log("Data: ", historyData);
-    console.log("Data type: ", typeof historyData);
+    // console.log("Data: ", historyData);
+    // console.log("Data type: ", typeof historyData);
 
     // we should covert the data into somehting more useful
-    var historyArr = JSON.parse(historyData);   // gives us an ARRAY OBJECT 
-
-    // we need to create a button/list item for each city
-    for(var i = 0; i < historyArr.length; i++) {
-        console.log(historyArr[i]);
-        console.log(newItem);
-        var newItem = document.createElement('button');
-        newItem.textContent = historyArr[i]
-        console.log(newItem);
-        // add/append this new element/data to the DOM
-        historyList.append(newItem);
+       // gives us an ARRAY OBJECT 
+    if(historyData){
+        historyList = JSON.parse(historyData);
     }
 
-    // * TO DO * How do we keep the HISTORY container from reapeating its dataset(?) -- //
+    
+    // we need to create a button/list item for each city
+    /*;
+    }*/
 
+    // * TO DO * How do we keep the HISTORY container from reapeating its dataset(?) -- //
+    
+    historyList.innerHTML = "";
+    for(var i = 0; i < searchHistory.length; i++) {
+       // console.log(historyArr[i]);
+       // console.log(newItem);
+        var newItem = document.createElement('button');
+        newItem.setAttribute('type', 'button')
+        newItem.setAttribute('data-search', searchHistory[i])
+        newItem.textContent= searchHistory[i]
+        // newItem.textContent = searchHistory[i]
+        //console.log(newItem);
+        // add/append this new element/data to the DOM
+        
+    }
+    historyList.append(newItem)
 }
 
 getHistory();
