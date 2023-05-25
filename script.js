@@ -175,8 +175,27 @@ var humid = document.querySelector(".humidity");
 var apiKey = "d17256f3567e1479f6aee9afaccb272d";
 var historyList = document.querySelector(".history");
 let searchHistory = [];
-button.addEventListener("click", function () {
+
+// This way NEEDS the Type validation 
+button.addEventListener("click", getCurrent);
+
+// --> This way DOES NOT need Type validation
+/* button.addEventListener("click", function(event) {
   var city = document.getElementById("city").value;
+  getCurrent(city);
+});
+*/
+
+function getCurrent(city) {
+  console.log("Function Input: ", city);
+  console.log("Input Type: ", typeof city);
+  // -- Type validation -- //
+  if(typeof city !== 'string') {
+
+    var city = document.getElementById("city").value;
+  }
+  // -- End of Type validation -- //
+
   var url =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     city +
@@ -208,7 +227,8 @@ button.addEventListener("click", function () {
       getForecast(city);
       appendToHistory(city)
     });
-});
+};
+
 function appendToHistory(search) {
     // If there is no search term return the function
     if (searchHistory.indexOf(search) !== -1) {
@@ -279,7 +299,9 @@ function makeSearchSearchable(e){
   var btn = e.target;
   var search = btn.getAttribute('data-search');
 //   fetchCoords(search);
-  getForecast(search)
+  getCurrent(search);
+  getForecast(search);
+
 }
 getHistory();
 historyList.addEventListener('click', makeSearchSearchable);
